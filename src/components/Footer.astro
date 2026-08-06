@@ -1,0 +1,123 @@
+---
+import { nav, site } from '../data/site';
+const year = new Date().getFullYear();
+const waHref = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.whatsappText)}`;
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <span class="brand-word">
+        <strong>ANKA TUR</strong>
+        <em>DATÇA</em>
+      </span>
+      <p>{site.tagline}</p>
+      <p class="season">☀️ {site.season}</p>
+    </div>
+
+    <nav class="footer-col" aria-label="Alt menü">
+      <h4>Menü</h4>
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+
+    <div class="footer-col">
+      <h4>İletişim</h4>
+      <a href={site.phoneHref}>{site.phoneDisplay}</a>
+      <a href={waHref} target="_blank" rel="noopener">WhatsApp</a>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <a href={site.instagram} target="_blank" rel="noopener">Instagram {site.instagramHandle}</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Kalkış</h4>
+      <p class="foot-note">{site.departurePoint}</p>
+      <p class="foot-note">Kalkış {site.timeDepart} · Dönüş {site.timeReturn}</p>
+      <p class="foot-note">Maksimum {site.capacity} kişi · Size özel</p>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <span>© {year} {site.brand}. Tüm hakları saklıdır.</span>
+    <span>Datça, Muğla</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--sea-ink);
+    color: #d6e7e9;
+    padding-top: clamp(48px, 7vw, 78px);
+  }
+  .footer-grid {
+    display: grid;
+    gap: 34px;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  }
+  @media (max-width: 860px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 520px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .brand-word {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+  .brand-word strong {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #fff;
+  }
+  .brand-word em {
+    font-style: normal;
+    font-size: 0.72rem;
+    letter-spacing: 0.42em;
+    color: var(--coral-soft);
+    font-weight: 700;
+  }
+  .footer-brand p {
+    color: #a9c6c9;
+    max-width: 34ch;
+  }
+  .season {
+    margin-top: 10px;
+    color: #d6e7e9;
+    font-weight: 600;
+  }
+  .footer-col h4 {
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .footer-col a,
+  .foot-note {
+    display: block;
+    color: #b9d3d6;
+    padding: 5px 0;
+    transition: color 0.15s ease;
+  }
+  .footer-col a:hover {
+    color: #fff;
+  }
+  .footer-bottom {
+    margin-top: clamp(34px, 5vw, 54px);
+    padding-block: 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 0.86rem;
+    color: #8fb0b3;
+  }
+</style>

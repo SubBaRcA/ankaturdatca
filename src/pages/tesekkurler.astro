@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../data/site';
+const waHref = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.whatsappText)}`;
+---
+
+<Layout title="Teşekkürler" description="Rezervasyon talebiniz alındı. En kısa sürede sizinle iletişime geçeceğiz.">
+  <section class="ty section">
+    <div class="container ty__inner">
+      <div class="ty__mark">✓</div>
+      <h1>Talebiniz bize ulaştı</h1>
+      <p class="lead">
+        Teşekkürler! Rezervasyon talebinizi aldık. En kısa sürede sizi arayıp müsaitlik ve detayları
+        paylaşacağız. Acele bir sorunuz varsa WhatsApp’tan da yazabilirsiniz.
+      </p>
+      <div class="ty__cta">
+        <a href={waHref} target="_blank" rel="noopener" class="btn btn--wa">WhatsApp’tan Yaz</a>
+        <a href="/" class="btn btn--ghost">Ana Sayfaya Dön</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .ty {
+    min-height: 60vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+  }
+  .ty__inner {
+    max-width: 620px;
+  }
+  .ty__mark {
+    width: 78px;
+    height: 78px;
+    margin: 0 auto 22px;
+    display: grid;
+    place-items: center;
+    font-size: 2.2rem;
+    color: #fff;
+    background: var(--sea);
+    border-radius: 50%;
+    box-shadow: 0 0 0 8px var(--lagoon-soft);
+  }
+  .ty__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 26px;
+  }
+</style>

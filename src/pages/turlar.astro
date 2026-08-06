@@ -1,0 +1,130 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import TurKarti from '../components/TurKarti.astro';
+import CTABand from '../components/CTABand.astro';
+import { site, tours, menu } from '../data/site';
+import { img } from '../data/images';
+
+const included = [
+  { t: 'Öğle yemeği', d: menu.lunch },
+  { t: 'İkramlar', d: 'Gün boyu çeşitli ikramlar' },
+  { t: 'Yüzme molaları', d: 'Berrak koylarda dilediğinizce' },
+  { t: 'Deneyimli kaptan', d: site.captain + ' eşliğinde' },
+];
+---
+
+<Layout title="Turlar" description="Anka Tur Datça tur seçenekleri: günlük koy turu, özel grup ve tekne kiralama. Maksimum 8 kişi, öğle yemeği dahil.">
+  <PageHero
+    eyebrow="Turlar"
+    title="Datça’da size özel tur seçenekleri"
+    subtitle={`Hepsi maksimum ${site.capacity} kişilik özel teknemizde. Fiyat ve müsaitlik için iletişime geçin.`}
+    image={img.tall}
+    objectPosition="50% 40%"
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--3">
+        {tours.map((t, i) => <TurKarti {...t} featured={i === 0} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight" style="background: var(--sand);">
+    <div class="container">
+      <div class="section-head center">
+        <p class="eyebrow">Her turda dahil</p>
+        <h2>Fiyatın içinde ne var?</h2>
+        <p class="lead">Turlarımızda öğle yemeği ve ikramlar dahildir. Alkollü içecekler hariçtir; dilerseniz yanınızda getirebilirsiniz.</p>
+      </div>
+      <div class="grid grid--2 inc">
+        {
+          included.map((x) => (
+            <div class="inc__item card">
+              <span class="inc__dot" />
+              <div>
+                <h3>{x.t}</h3>
+                <p>{x.d}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container info-strip">
+      <div>
+        <span>Kalkış Noktası</span>
+        <strong>{site.departurePoint}</strong>
+      </div>
+      <div>
+        <span>Saatler</span>
+        <strong>{site.timeDepart} - {site.timeReturn}</strong>
+      </div>
+      <div>
+        <span>Kapasite</span>
+        <strong>Maksimum {site.capacity} kişi</strong>
+      </div>
+      <div>
+        <span>Sezon</span>
+        <strong>{site.season}</strong>
+      </div>
+    </div>
+  </section>
+
+  <CTABand />
+</Layout>
+
+<style>
+  .inc {
+    gap: 18px;
+  }
+  .inc__item {
+    display: flex;
+    gap: 14px;
+    padding: 22px;
+    align-items: flex-start;
+  }
+  .inc__dot {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-top: 6px;
+    border-radius: 50%;
+    background: var(--sea);
+    box-shadow: 0 0 0 5px var(--lagoon-soft);
+  }
+  .inc__item h3 {
+    margin-bottom: 4px;
+  }
+  .info-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: clamp(24px, 4vw, 38px);
+    background: var(--sea-ink);
+    border-radius: var(--radius-lg);
+    color: #fff;
+  }
+  @media (max-width: 720px) {
+    .info-strip {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .info-strip span {
+    display: block;
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9fc2c4;
+    margin-bottom: 6px;
+  }
+  .info-strip strong {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: #fff;
+  }
+</style>

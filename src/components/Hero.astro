@@ -1,0 +1,156 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../data/site';
+import { img } from '../data/images';
+
+const waHref = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.whatsappText)}`;
+---
+
+<section class="hero">
+  <Image
+    src={img.heroHome}
+    alt=""
+    class="hero__img"
+    widths={[720, 1080, 1600]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+  />
+  <div class="hero__scrim"></div>
+
+  <div class="container hero__inner">
+    <p class="hero__eyebrow">Datça · Özel Tekne Turu</p>
+    <h1 class="hero__title">Datça’nın saklı koyları,<br /><span>sadece sizinle.</span></h1>
+    <p class="hero__lead">
+      Kalabalık teknelerde değil, maksimum {site.capacity} kişilik özel teknemizde. Arkadaş ve aile
+      gruplarına özel, o güne göre şekillenen esnek bir deniz günü.
+    </p>
+
+    <div class="hero__badges">
+      <span class="hero__badge"><b>Max {site.capacity}</b> kişi</span>
+      <span class="hero__badge">Öğle yemeği dahil</span>
+      <span class="hero__badge">Esnek rota</span>
+    </div>
+
+    <div class="hero__cta">
+      <a href="/iletisim" class="btn btn--coral">Rezervasyon Yap</a>
+      <a href={waHref} target="_blank" rel="noopener" class="btn btn--wa">WhatsApp’tan Yaz</a>
+    </div>
+
+    <div class="hero__strip">
+      <div><span>Kalkış</span><strong>{site.timeDepart}</strong></div>
+      <div><span>Dönüş</span><strong>{site.timeReturn}</strong></div>
+      <div><span>Kalkış Noktası</span><strong>{site.departurePoint}</strong></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: min(92vh, 820px);
+    display: flex;
+    align-items: flex-end;
+    color: #fff;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .hero__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 42%;
+    z-index: -2;
+  }
+  @media (max-width: 640px) {
+    .hero__img {
+      object-position: 50% 64%;
+    }
+  }
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(8, 43, 48, 0.35) 0%, rgba(8, 43, 48, 0) 32%),
+      linear-gradient(0deg, rgba(6, 37, 41, 0.9) 4%, rgba(6, 37, 41, 0.45) 40%, rgba(6, 37, 41, 0.08) 72%);
+  }
+  .hero__inner {
+    padding-block: clamp(40px, 8vw, 92px);
+    max-width: 860px;
+  }
+  .hero__eyebrow {
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--coral-soft);
+    margin-bottom: 14px;
+  }
+  .hero__title {
+    color: #fff;
+    font-size: clamp(2.6rem, 7vw, 4.6rem);
+    line-height: 1.02;
+    text-shadow: 0 2px 30px rgba(3, 26, 29, 0.45);
+  }
+  .hero__title span {
+    color: var(--lagoon);
+  }
+  .hero__lead {
+    color: #e7f2f2;
+    font-size: clamp(1.05rem, 1.8vw, 1.28rem);
+    max-width: 60ch;
+    margin-top: 18px;
+    text-shadow: 0 1px 16px rgba(3, 26, 29, 0.4);
+  }
+  .hero__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .hero__badge {
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(4px);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .hero__badge b {
+    color: var(--lagoon);
+  }
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .hero__strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(20px, 5vw, 54px);
+    margin-top: 34px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .hero__strip div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .hero__strip span {
+    font-size: 0.76rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #a9ccce;
+  }
+  .hero__strip strong {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: #fff;
+  }
+</style>

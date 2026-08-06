@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import Galeri from '../components/Galeri.astro';
+import CTABand from '../components/CTABand.astro';
+import { gallery, img } from '../data/images';
+---
+
+<Layout title="Galeri" description="Anka Tur Datça tekne turundan kareler: Datça’nın berrak koyları, turkuaz denizi ve teknemiz.">
+  <PageHero
+    eyebrow="Galeri"
+    title="Datça’nın renkleri"
+    subtitle="Koylardan, denizden ve teknemizden kareler. Sizi bekleyen gün böyle görünüyor."
+    image={img.green}
+    objectPosition="50% 50%"
+  />
+
+  <section class="section">
+    <div class="container">
+      <Galeri items={gallery} />
+    </div>
+  </section>
+
+  <CTABand />
+</Layout>

@@ -1,0 +1,199 @@
+---
+import { Image } from 'astro:assets';
+import { nav, site } from '../data/site';
+import logo from '../assets/brand/logo-lowres.jpg';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label={`${site.brand} ana sayfa`}>
+      <Image src={logo} alt="Anka Tur Datça logosu" width={48} height={48} class="brand-logo" loading="eager" />
+      <span class="brand-word">
+        <strong>ANKA TUR</strong>
+        <em>DATÇA</em>
+      </span>
+    </a>
+
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-burger" aria-label="Menüyü aç/kapat">
+      <span></span><span></span><span></span>
+    </label>
+
+    <nav class="site-nav" aria-label="Ana menü">
+      {
+        nav.map((item) => {
+          const href = item.href.replace(/\/$/, '') || '/';
+          const active = href === path;
+          return (
+            <a href={item.href} class:list={['nav-link', { active }]} aria-current={active ? 'page' : undefined}>
+              {item.label}
+            </a>
+          );
+        })
+      }
+      <a href="/iletisim" class="btn btn--coral nav-cta">Rezervasyon</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: color-mix(in srgb, var(--cream) 82%, transparent);
+    backdrop-filter: saturate(140%) blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner {
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+  .brand-word {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .brand-word strong {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.12rem;
+    letter-spacing: 0.02em;
+    color: var(--sea-ink);
+  }
+  .brand-word em {
+    font-style: normal;
+    font-size: 0.72rem;
+    letter-spacing: 0.42em;
+    color: var(--coral-deep);
+    font-weight: 700;
+    padding-left: 2px;
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 1.6vw, 26px);
+  }
+  .nav-link {
+    font-weight: 600;
+    font-size: 0.96rem;
+    color: var(--ink);
+    padding: 6px 2px;
+    position: relative;
+    transition: color 0.15s ease;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 2px;
+    background: var(--coral);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+  .nav-link:hover {
+    color: var(--sea-deep);
+  }
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    transform: scaleX(1);
+  }
+  .nav-link.active {
+    color: var(--sea-deep);
+  }
+  .nav-cta {
+    margin-left: 6px;
+    padding: 0.6em 1.2em;
+    font-size: 0.9rem;
+  }
+
+  .nav-toggle,
+  .nav-burger {
+    display: none;
+  }
+
+  @media (max-width: 920px) {
+    .nav-burger {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      cursor: pointer;
+      z-index: 61;
+    }
+    .nav-burger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      margin-inline: auto;
+      background: var(--sea-ink);
+      border-radius: 2px;
+      transition: transform 0.22s ease, opacity 0.22s ease;
+    }
+    .site-nav {
+      position: fixed;
+      inset: var(--nav-h) 0 auto 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 4px;
+      background: var(--cream);
+      border-bottom: 1px solid var(--line);
+      padding: 16px 22px 26px;
+      box-shadow: var(--shadow-md);
+      transform: translateY(-140%);
+      transition: transform 0.28s ease;
+    }
+    .nav-link {
+      padding: 12px 4px;
+      border-bottom: 1px solid var(--line);
+      font-size: 1.05rem;
+    }
+    .nav-link::after {
+      display: none;
+    }
+    .nav-cta {
+      margin-top: 12px;
+      margin-left: 0;
+      justify-content: center;
+      padding: 0.85em 1.2em;
+      font-size: 1rem;
+    }
+    .nav-toggle:checked ~ .site-nav {
+      transform: translateY(0);
+    }
+    .nav-toggle:checked ~ .nav-burger span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .nav-toggle:checked ~ .nav-burger span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle:checked ~ .nav-burger span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+</style>

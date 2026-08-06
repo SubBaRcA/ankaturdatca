@@ -1,0 +1,126 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABand from '../components/CTABand.astro';
+import { site, coves } from '../data/site';
+import { img } from '../data/images';
+---
+
+<Layout
+  title="Rotalar & Koylar"
+  description="Datça’da tekneyle gidilen koylar: İnceburun, Kuntakinte, Armutlu Su, Akvaryum, Çeti Suyu, Kargı, İncirli İn. Rota neden sabit değildir ve nasıl planlanır."
+>
+  <PageHero
+    eyebrow="Rotalar & Koylar"
+    title="Datça’da tekneyle görülebilecek koylar"
+    subtitle="Araçla ulaşması zor olan sakin duraklara denizden ulaşıyoruz. İnceburun hattındaki koylar günün en değerli kısmı."
+    image={img.waterClear}
+    objectPosition="50% 55%"
+  />
+
+  <section class="section">
+    <div class="container prose">
+      <p class="eyebrow">Rota mantığı</p>
+      <h2>İsim listesi değil, gerçek bir deniz günü</h2>
+      <p class="lead">
+        Datça koyları için önemli olan, rotayı sadece bir isim listesi gibi görmek değil; hangi koyun hangi
+        koşulda daha keyifli olduğunu bilmektir. Hava ve deniz uygun olduğunda aynı gün içinde birkaç farklı
+        renk ve koy karakteri görebilirsiniz. Maksimum {site.capacity} kişi olduğumuz için de rotayı sizin
+        grubunuza göre rahatça şekillendiririz.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--tight" style="background: var(--sand);">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Duraklar</p>
+        <h2>İnceburun hattının koyları</h2>
+      </div>
+      <div class="grid grid--2 cove-grid">
+        {
+          coves.map((c, i) => (
+            <article class="cove card">
+              <span class="cove__no">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{c.name}</h3>
+                <p>{c.text}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container two-col">
+      <div class="prose">
+        <p class="eyebrow">Sık sorulan</p>
+        <h2>Rota neden sabit yazılmıyor?</h2>
+        <p>
+          Birçok misafir bütün koyların önceden kesinleştirilmiş olmasını bekler. Oysa deniz turunda en doğru
+          plan, güvenli ve keyifli durakları o günkü koşullara göre seçmektir. Rota kağıt üzerinde sabit görünse
+          bile rüzgar ve deniz durumu koy seçimini doğrudan etkiler.
+        </p>
+        <p>
+          Bu yüzden rotayı gerçekçi tutuyoruz: İnceburun, Kuntakinte, Armutlu Su, Akvaryum, Çeti Suyu, Kargı ve
+          İncirli İn ana çerçeveyi oluşturur; son durak planı güvenlik ve konfor önceliğiyle yapılır.
+        </p>
+      </div>
+      <div class="prose">
+        <p class="eyebrow">İpucu</p>
+        <h2>Rota ve rezervasyonu birlikte düşünün</h2>
+        <p>
+          Koy rotasını merak eden misafirler çoğu zaman hangi gün gitmenin daha doğru olacağını da öğrenmek ister.
+          Bu yüzden rota sorusunu rezervasyon niyetiyle birlikte sormak daha sağlıklı sonuç verir.
+        </p>
+        <p>
+          “Hangi koylara gidiliyor?” demek yerine tarihinizi ve kişi sayınızı yazın; o gün için nasıl bir rota
+          düşündüğümüzü paylaşalım. Böylece sadece bir liste değil, gerçek bir deniz günü planı öğrenmiş olursunuz.
+        </p>
+        <a href="/iletisim" class="btn btn--coral">Tarih verin, rotayı planlayalım</a>
+      </div>
+    </div>
+  </section>
+
+  <CTABand title="O gün için en güzel koyları birlikte seçelim" text="Tarihinizi ve kişi sayınızı yazın; size özel bir rota önerelim." />
+</Layout>
+
+<style>
+  .prose {
+    max-width: 62ch;
+  }
+  .prose p {
+    margin-top: 1rem;
+  }
+  .cove-grid {
+    gap: 18px;
+  }
+  .cove {
+    display: flex;
+    gap: 16px;
+    padding: 22px;
+    align-items: flex-start;
+  }
+  .cove__no {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--coral);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .cove h3 {
+    margin-bottom: 4px;
+  }
+  .two-col {
+    display: grid;
+    gap: clamp(28px, 5vw, 56px);
+  }
+  @media (min-width: 860px) {
+    .two-col {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

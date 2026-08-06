@@ -1,0 +1,163 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import RezervasyonForm from '../components/RezervasyonForm.astro';
+import { site } from '../data/site';
+import { img } from '../data/images';
+
+const waHref = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.whatsappText)}`;
+
+const contacts = [
+  { label: 'Telefon', value: site.phoneDisplay, href: site.phoneHref },
+  { label: 'WhatsApp', value: 'Mesaj gönderin', href: waHref, external: true },
+  { label: 'E-posta', value: site.email, href: `mailto:${site.email}` },
+  { label: 'Instagram', value: site.instagramHandle, href: site.instagram, external: true },
+];
+---
+
+<Layout
+  title="İletişim & Rezervasyon"
+  description="Anka Tur Datça rezervasyon ve iletişim. Datça Yat Limanı’ndan kalkış. Telefon, WhatsApp ve rezervasyon formu."
+>
+  <PageHero
+    eyebrow="İletişim & Rezervasyon"
+    title="Tarihinizi ayıralım"
+    subtitle="Formu doldurun ya da doğrudan WhatsApp’tan yazın; en kısa sürede dönelim."
+    image={img.waterClear}
+    objectPosition="50% 60%"
+  />
+
+  <section class="section">
+    <div class="container contact">
+      <aside class="contact__side">
+        <p class="eyebrow">Bize ulaşın</p>
+        <h2>Konuşalım</h2>
+        <p class="lead">
+          Fiyat ve müsaitlik için çekinmeden yazın. Maksimum {site.capacity} kişilik özel teknemizde
+          size en uygun günü birlikte planlayalım.
+        </p>
+
+        <div class="contact__list">
+          {
+            contacts.map((c) => (
+              <a href={c.href} class="contact__row" target={c.external ? '_blank' : undefined} rel={c.external ? 'noopener' : undefined}>
+                <span class="contact__label">{c.label}</span>
+                <span class="contact__value">{c.value}</span>
+              </a>
+            ))
+          }
+        </div>
+
+        <div class="contact__meta">
+          <div>
+            <span>Kalkış Noktası</span>
+            <strong>{site.departurePoint}</strong>
+          </div>
+          <div>
+            <span>Saatler</span>
+            <strong>{site.timeDepart} - {site.timeReturn}</strong>
+          </div>
+          <div>
+            <span>Sezon</span>
+            <strong>{site.season}</strong>
+          </div>
+        </div>
+
+        <div class="contact__map">
+          <iframe
+            title="Datça Yat Limanı harita"
+            src="https://www.google.com/maps?q=Dat%C3%A7a%20Yat%20Liman%C4%B1&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </aside>
+
+      <div class="contact__form">
+        <RezervasyonForm />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .contact {
+    display: grid;
+    gap: clamp(30px, 5vw, 56px);
+    align-items: start;
+  }
+  @media (min-width: 940px) {
+    .contact {
+      grid-template-columns: 1fr 1.1fr;
+    }
+  }
+  .contact__list {
+    display: grid;
+    gap: 10px;
+    margin: 24px 0;
+  }
+  .contact__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .contact__row:hover {
+    border-color: var(--lagoon);
+    transform: translateX(3px);
+  }
+  .contact__label {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  .contact__value {
+    font-weight: 700;
+    color: var(--sea-ink);
+  }
+  .contact__meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    padding: 18px;
+    background: var(--sand);
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+  }
+  @media (max-width: 480px) {
+    .contact__meta {
+      grid-template-columns: 1fr;
+    }
+  }
+  .contact__meta span {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .contact__meta strong {
+    color: var(--sea-ink);
+  }
+  .contact__map {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-sm);
+  }
+  .contact__map iframe {
+    display: block;
+    width: 100%;
+    height: 260px;
+    border: 0;
+  }
+</style>

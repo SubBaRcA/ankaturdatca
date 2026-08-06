@@ -1,0 +1,121 @@
+---
+interface Props {
+  title: string;
+  summary: string;
+  duration: string;
+  highlights: readonly string[];
+  featured?: boolean;
+}
+const { title, summary, duration, highlights, featured = false } = Astro.props;
+---
+
+<article class:list={['tur', { 'tur--featured': featured }]}>
+  {featured && <span class="tur__flag">En çok tercih edilen</span>}
+  <div class="tur__top">
+    <h3>{title}</h3>
+    <span class="tur__time">{duration}</span>
+  </div>
+  <p class="tur__summary">{summary}</p>
+  <ul class="tur__list">
+    {
+      highlights.map((h) => (
+        <li>
+          <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M8.2 13.3 5 10.1l1.3-1.3 1.9 1.9 5-5L14.5 7l-6.3 6.3z M10 1.7A8.3 8.3 0 1 0 18.3 10 8.3 8.3 0 0 0 10 1.7z"
+            />
+          </svg>
+          <span>{h}</span>
+        </li>
+      ))
+    }
+  </ul>
+  <a href="/iletisim" class="tur__cta">Fiyat &amp; müsaitlik için iletişim →</a>
+</article>
+
+<style>
+  .tur {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 24px 24px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    position: relative;
+    height: 100%;
+  }
+  .tur:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--lagoon);
+  }
+  .tur--featured {
+    border-color: var(--coral);
+    box-shadow: 0 18px 44px rgba(216, 86, 43, 0.16);
+  }
+  .tur__flag {
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    background: var(--coral);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 999px;
+    box-shadow: var(--shadow-sm);
+  }
+  .tur__top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .tur__time {
+    flex-shrink: 0;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--sea-deep);
+    background: var(--lagoon-soft);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .tur__summary {
+    margin-bottom: 16px;
+  }
+  .tur__list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 22px;
+  }
+  .tur__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+  .tur__list svg {
+    color: var(--sea);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .tur__cta {
+    margin-top: auto;
+    font-weight: 700;
+    color: var(--coral-deep);
+    font-size: 0.95rem;
+  }
+  .tur__cta:hover {
+    color: var(--coral);
+  }
+</style>

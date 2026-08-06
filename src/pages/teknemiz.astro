@@ -1,0 +1,162 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABand from '../components/CTABand.astro';
+import { site } from '../data/site';
+import { img } from '../data/images';
+
+const specs = [
+  {
+    t: `Maksimum ${site.capacity} kişi`,
+    d: 'Küçük ve samimi. Herkese yer, güverteye rahat erişim, sıra beklemek yok.',
+  },
+  {
+    t: 'Güneş ve gölge bir arada',
+    d: 'Güneşlenmek için açık güverte, serinlemek için gölgeli oturma alanı.',
+  },
+  {
+    t: 'Güvenlik önce',
+    d: 'Can yelekleri ve güvenlik ekipmanları eksiksiz; çocuklu aileler için de uygun.',
+  },
+  {
+    t: 'Yüzmeye kolay giriş',
+    d: 'Deniz merdiveniyle berrak koylara rahatça inip çıkın.',
+  },
+];
+---
+
+<Layout
+  title="Teknemiz"
+  description="Anka Tur Datça teknesi: maksimum 8 kişilik, size özel, güvenli ve konforlu. Şahin Kaptan eşliğinde Datça koyları."
+>
+  <PageHero
+    eyebrow="Teknemiz"
+    title="Küçük tekne, büyük özgürlük"
+    subtitle={`Maksimum ${site.capacity} kişilik teknemiz sadece sizin grubunuza ait. Kalabalık yok, program tamamen size göre.`}
+    image={img.boatDeck}
+    objectPosition="50% 50%"
+  />
+
+  <section class="section">
+    <div class="container split2">
+      <div class="split2__text">
+        <p class="eyebrow">Neden küçük tekne?</p>
+        <h2>8 kişiye kadar, çünkü fark burada başlıyor</h2>
+        <p class="lead">
+          Datça’daki büyük tekneler 40-50 kişiyle aynı koylara gider. Biz bilinçli olarak küçük kalıyoruz.
+          Böylece gün sizin temponuza göre akar: nerede daha çok kalacağınıza, nerede yüzeceğinize birlikte
+          karar veririz. Genelde arkadaş ve aile grupları geldiği için tekne baştan sona size aittir.
+        </p>
+        <div class="specs">
+          {
+            specs.map((s) => (
+              <div class="spec">
+                <span class="spec__mark" />
+                <div>
+                  <h3>{s.t}</h3>
+                  <p>{s.d}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <div class="split2__media">
+        <Image src={img.covePebbles} alt="Datça’da berrak, çakıl taşlı bir koy" widths={[420, 640, 820]} sizes="(max-width: 900px) 100vw, 420px" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Kaptan -->
+  <section class="section section--tight" style="background: var(--sand);">
+    <div class="container captain">
+      <div class="captain__media">
+        <Image src={img.reflection} alt="Datça denizinde tekneden manzara" widths={[420, 640, 820]} sizes="(max-width: 820px) 100vw, 400px" loading="lazy" />
+      </div>
+      <div class="captain__text">
+        <p class="eyebrow">Kaptanınız</p>
+        <h2>{site.captain}</h2>
+        <p class="lead">
+          Çocukluğundan beri denizin içinde olan {site.captain}, Datça’nın koylarını avucunun içi gibi bilir.
+          Onunla çıktığınız gün, güvenli ve keyifli bir deniz gününe dönüşür.
+        </p>
+        <a href="/iletisim" class="btn btn--coral">Bize ulaşın</a>
+      </div>
+    </div>
+  </section>
+
+  <CTABand title="Teknemizi size ayıralım" text="Tarihinizi paylaşın, o güne özel bir gün planlayalım." />
+</Layout>
+
+<style>
+  .split2 {
+    display: grid;
+    gap: clamp(28px, 5vw, 56px);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .split2 {
+      grid-template-columns: 1fr 420px;
+    }
+  }
+  .split2__media {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .split2__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .specs {
+    display: grid;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (min-width: 560px) {
+    .specs {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .spec {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .spec__mark {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    margin-top: 6px;
+    border-radius: 50%;
+    background: var(--sea);
+    box-shadow: 0 0 0 4px var(--lagoon-soft);
+  }
+  .spec h3 {
+    font-size: 1.05rem;
+    margin-bottom: 3px;
+  }
+
+  .captain {
+    display: grid;
+    gap: clamp(24px, 5vw, 52px);
+    align-items: center;
+  }
+  @media (min-width: 820px) {
+    .captain {
+      grid-template-columns: 400px 1fr;
+    }
+  }
+  .captain__media {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .captain__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>

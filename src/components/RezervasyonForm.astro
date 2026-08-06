@@ -1,0 +1,152 @@
+---
+import { site, tours } from '../data/site';
+const waHref = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.whatsappText)}`;
+const people = Array.from({ length: site.capacity }, (_, i) => i + 1);
+---
+
+<div class="rez">
+  <form class="rez__form" action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value={site.web3formsKey} />
+    <input type="hidden" name="subject" value="Yeni Rezervasyon Talebi · Anka Tur Datça" />
+    <input type="hidden" name="from_name" value="Anka Tur Datça Web Sitesi" />
+    <input type="hidden" name="redirect" value="https://www.ankaturdatca.com/tesekkurler" />
+    <input type="checkbox" name="botcheck" class="rez__hp" tabindex="-1" autocomplete="off" />
+
+    <div class="rez__row">
+      <label class="rez__field">
+        <span>Ad Soyad *</span>
+        <input type="text" name="Ad Soyad" required autocomplete="name" placeholder="Adınız ve soyadınız" />
+      </label>
+      <label class="rez__field">
+        <span>Telefon *</span>
+        <input type="tel" name="Telefon" required autocomplete="tel" placeholder="05xx xxx xx xx" />
+      </label>
+    </div>
+
+    <div class="rez__row">
+      <label class="rez__field">
+        <span>E-posta</span>
+        <input type="email" name="email" autocomplete="email" placeholder="ornek@eposta.com" />
+      </label>
+      <label class="rez__field">
+        <span>Tarih</span>
+        <input type="date" name="Tarih" />
+      </label>
+    </div>
+
+    <div class="rez__row">
+      <label class="rez__field">
+        <span>Kişi Sayısı</span>
+        <select name="Kişi Sayısı">
+          {people.map((n) => <option value={n}>{n} kişi</option>)}
+        </select>
+      </label>
+      <label class="rez__field">
+        <span>Tur Tipi</span>
+        <select name="Tur Tipi">
+          {tours.map((t) => <option value={t.title}>{t.title}</option>)}
+        </select>
+      </label>
+    </div>
+
+    <label class="rez__field">
+      <span>Notunuz</span>
+      <textarea name="Not" rows="4" placeholder="Grup, özel istekler, sormak istedikleriniz..."></textarea>
+    </label>
+
+    <button type="submit" class="btn btn--coral rez__submit">Rezervasyon Talebi Gönder</button>
+    <p class="rez__note">Talebiniz bize ulaşınca en kısa sürede sizi arıyoruz. Fiyat ve müsaitlik için de yazabilirsiniz.</p>
+  </form>
+
+  <div class="rez__alt">
+    <p>Hemen konuşmayı mı tercih edersiniz?</p>
+    <a href={waHref} target="_blank" rel="noopener" class="btn btn--wa">WhatsApp’tan Yaz</a>
+    <a href={site.phoneHref} class="btn btn--ghost">{site.phoneDisplay}</a>
+  </div>
+</div>
+
+<style>
+  .rez {
+    display: grid;
+    gap: 22px;
+  }
+  .rez__form {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(20px, 3vw, 32px);
+    box-shadow: var(--shadow-sm);
+    display: grid;
+    gap: 16px;
+  }
+  .rez__row {
+    display: grid;
+    gap: 16px;
+  }
+  @media (min-width: 620px) {
+    .rez__row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .rez__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .rez__field span {
+    font-weight: 700;
+    font-size: 0.86rem;
+    color: var(--sea-ink);
+  }
+  .rez__field input,
+  .rez__field select,
+  .rez__field textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    padding: 12px 14px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--cream);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .rez__field input:focus,
+  .rez__field select:focus,
+  .rez__field textarea:focus {
+    outline: none;
+    border-color: var(--sea);
+    box-shadow: 0 0 0 3px var(--lagoon-soft);
+  }
+  .rez__field textarea {
+    resize: vertical;
+  }
+  .rez__hp {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+  }
+  .rez__submit {
+    margin-top: 4px;
+    width: 100%;
+  }
+  .rez__note {
+    font-size: 0.86rem;
+    color: var(--muted);
+    text-align: center;
+  }
+  .rez__alt {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 20px;
+    background: var(--sand);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .rez__alt p {
+    font-weight: 700;
+    color: var(--sea-ink);
+    margin-right: auto;
+  }
+</style>

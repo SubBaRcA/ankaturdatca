@@ -1,0 +1,85 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsappFab from '../components/WhatsappFab.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const pageTitle = title ? `${title} · ${site.brand}` : `${site.brand} · Özel Tekne Turu`;
+const pageDesc = description ?? site.description;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://www.ankaturdatca.com').href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TouristTrip',
+  name: `${site.brand} Özel Tekne Turu`,
+  description: site.description,
+  touristType: 'Aile ve arkadaş grupları',
+  provider: {
+    '@type': 'LocalBusiness',
+    name: site.brand,
+    image: canonical,
+    telephone: site.phoneDisplay,
+    email: site.email,
+    areaServed: 'Datça, Muğla',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Datça',
+      addressRegion: 'Muğla',
+      addressCountry: 'TR',
+    },
+    sameAs: [site.instagram],
+  },
+  maximumAttendeeCapacity: site.capacity,
+};
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#0e8a94" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.brand} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="tr_TR" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Yazı tipleri -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a href="#icerik" class="visually-hidden">İçeriğe geç</a>
+    <Header />
+    <main id="icerik">
+      <slot />
+    </main>
+    <Footer />
+    <WhatsappFab />
+  </body>
+</html>

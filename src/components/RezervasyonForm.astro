@@ -5,12 +5,12 @@ const people = Array.from({ length: site.capacity }, (_, i) => i + 1);
 ---
 
 <div class="rez">
-  <form class="rez__form" action="https://api.web3forms.com/submit" method="POST">
-    <input type="hidden" name="access_key" value={site.web3formsKey} />
-    <input type="hidden" name="subject" value="Yeni Rezervasyon Talebi · Anka Tur Datça" />
-    <input type="hidden" name="from_name" value="Anka Tur Datça Web Sitesi" />
-    <input type="hidden" name="redirect" value="https://www.ankaturdatca.com/tesekkurler" />
-    <input type="checkbox" name="botcheck" class="rez__hp" tabindex="-1" autocomplete="off" />
+  <form class="rez__form" action={`https://formsubmit.co/${site.formTarget}`} method="POST">
+    <input type="hidden" name="_subject" value="Yeni Rezervasyon Talebi · Anka Tur Datça" />
+    <input type="hidden" name="_template" value="table" />
+    <input type="hidden" name="_captcha" value="false" />
+    <input type="hidden" name="_next" value="https://www.ankaturdatca.com/tesekkurler" />
+    <input type="text" name="_honey" class="rez__hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
     <div class="rez__row">
       <label class="rez__field">

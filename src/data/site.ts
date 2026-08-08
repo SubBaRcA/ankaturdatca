@@ -29,9 +29,8 @@ export const site = {
   capacity: 8,
   captain: 'Şahin Kaptan',
 
-  // Rezervasyon formu: Web3Forms (ücretsiz, backend’siz).
-  // [DOLDURULACAK]: hello@ankaturdatca.com ile web3forms.com’dan ücretsiz key alınacak.
-  web3formsKey: 'YOUR_WEB3FORMS_ACCESS_KEY',
+  // Rezervasyon formu: FormSubmit (ücretsiz, key yok; ilk gönderimde tek seferlik e-posta onayı).
+  formTarget: 'hello@ankaturdatca.com',
 } as const;
 
 export const nav = [

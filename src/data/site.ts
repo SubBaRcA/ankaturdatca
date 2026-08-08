@@ -30,7 +30,8 @@ export const site = {
   captain: 'Şahin Kaptan',
 
   // Rezervasyon formu: FormSubmit (ücretsiz, key yok; ilk gönderimde tek seferlik e-posta onayı).
-  formTarget: 'hello@ankaturdatca.com',
+  // Not: hello@ (Conversations) otomatik mailleri güvenilir almadığı için hedef Şahin'in gmail'i.
+  formTarget: 'sahinyilmaz.ankatur@gmail.com',
 } as const;
 
 export const nav = [

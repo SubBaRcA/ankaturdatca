@@ -7,9 +7,9 @@
 |--------|--------------------|--------|
 | Domain `ankaturdatca.com` | **Müşteri** (kendi GoDaddy hesabı) | GoDaddy |
 | E-posta `hello@ankaturdatca.com` | **Müşteri** (GoDaddy Conversations) | GoDaddy Conversations |
-| Web sitesi (host + bakım) | **Baris (biz)** | Vercel (`ankatur-site`) |
-| Kaynak kod | Baris (kopya müşteriye verilebilir) | `/Users/baris/ankatur-site` |
-| Rezervasyon formu | Web3Forms → müşterinin kutusuna düşer | Web3Forms |
+| Web sitesi (host + bakım) | **Baris (biz)** | GitHub Pages (repo `SubBaRcA/ankaturdatca`) |
+| Kaynak kod | Baris (repo müşteriye verilebilir) | `/Users/baris/ankatur-site` + GitHub `SubBaRcA/ankaturdatca` |
+| Rezervasyon formu | FormSubmit → `hello@ankaturdatca.com` kutusuna düşer | FormSubmit (key yok) |
 
 Kısaca: **müşteri domain + e-postanın sahibi olur; site bizde barınır ve bizim tarafımızdan güncellenir.** Değişiklik talepleri bize gelir.
 
@@ -35,11 +35,11 @@ Müşterinin GoDaddy hesabı olduğu için en temiz yol **hesaptan-hesaba taşı
 
 Domain taşındıktan sonra müşterinin GoDaddy hesabında şunları teyit et:
 
-- **DNS kayıtları duruyor mu?**
-  - `A` · `@` · `76.76.21.21`  (siteyi bizim Vercel'e yönlendirir)
-  - `CNAME` · `www` · `cname.vercel-dns.com`
-  - E-posta kayıtları (MX `secureserver.net`, bounces/dkim CNAME'leri) yerinde mi
-- **Vercel:** `ankatur-site` projesinde domain hâlâ "Valid" mi (DNS aynı kaldığı için değişmez).
+- **DNS kayıtları duruyor mu?** (siteyi GitHub Pages'e yönlendirir)
+  - `A` · `@` · `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+  - `CNAME` · `www` · `subbarca.github.io`
+  - E-posta kayıtları (MX `secureserver.net`, SPF/DMARC, bounces/dkim CNAME'leri) yerinde mi
+- **GitHub Pages:** `SubBaRcA/ankaturdatca` reposunda custom domain `www.ankaturdatca.com` "verified" + HTTPS "Enforce" açık mı.
 - **E-posta (Conversations):** `hello@ankaturdatca.com` müşterinin hesabında görünüyor mu; bildirim adresi **müşterinin e-postasına** çevrildi mi (şu an `barisesmer@hotmail.com`).
 
 ---
@@ -58,21 +58,22 @@ Domain taşındıktan sonra müşterinin GoDaddy hesabında şunları teyit et:
 
 ## 4. Bizde kalan (yönetim)
 
-- **Vercel projesi** `ankatur-site` (host, SSL, deploy).
+- **GitHub Pages** hosting: repo `SubBaRcA/ankaturdatca` (host, SSL, deploy). Güncelleme = `main`'e push → GitHub Actions otomatik yayınlar. Ücretsiz.
 - **Kaynak kod** ve gelecekteki güncellemeler.
 - Değişiklik / içerik güncelleme talepleri → bize.
-- *(Ticari not: aylık/yıllık bakım-host ücreti burada konumlandırılabilir — karma modelin tekrarlayan gelir tarafı.)*
+- *(Ticari not: aylık/yıllık bakım ücreti burada konumlandırılabilir — karma modelin tekrarlayan gelir tarafı. Not: GitHub Pages'in ticari kullanımı resmi olarak "küçük site" toleransındadır; trafik büyürse Cloudflare Pages'e taşımak resmi ücretsiz-ticari seçenektir.)*
 
 ---
 
 ## 5. Teslim ÖNCESİ tamamlanacaklar (go-live)
 
-Müşteriye çalışan bir ürün teslim etmek için önce:
+Durum:
 
-1. **Apex DNS oturması:** `ankaturdatca.com` (www zaten Vercel'de) GoDaddy park'ından çıkıp Vercel'e dönmeli. Gerekirse A `@` kaydını sil + tekrar ekle.
-2. **Web3Forms key:** `hello@ankaturdatca.com` ile web3forms.com'dan ücretsiz key al → `src/data/site.ts` → `web3formsKey`. Böylece rezervasyon talepleri müşterinin kutusuna düşer. Sonra `vercel --prod` ile yeniden deploy.
-3. **Yüksek çözünürlüklü logo** (opsiyonel ama önerilir): mevcut 150×150 logo header'da bulanık.
-4. Vercel'de birincil alan adı = `www.ankaturdatca.com`, apex → www yönlendirmesi.
+1. ✅ **Hosting:** GitHub Pages'e taşındı (Vercel Hobby ticari kullanımı bloke ediyordu). DNS GitHub'a çevrildi (A x4 + CNAME www).
+2. ⏳ **HTTPS:** GitHub Let's Encrypt sertifikasını üretiyor; hazır olunca "Enforce HTTPS" açılır.
+3. ⏳ **Form aktivasyonu:** İlk gönderimde FormSubmit `hello@`'a "Activate Form" maili yollar; Şahin bir kez tıklar → form canlı.
+4. ⬜ **Yüksek çözünürlüklü logo** (opsiyonel): mevcut 150×150 logo header'da bulanık; Şahin gönderince güncellenir.
+5. ⬜ **Şahin Kaptan metni** (opsiyonel): teknemiz sayfası için kısa bio.
 
 ---
 
@@ -80,7 +81,7 @@ Müşteriye çalışan bir ürün teslim etmek için önce:
 
 > Güvenlik: şifreleri bu dosyada saklama. Müşteriye ayrı, güvenli kanaldan ilet.
 
-- GoDaddy (müşteri hesabı): `[MÜŞTERİ GODADDY E-POSTASI]`
-- E-posta bildirim adresi (yeni): `[MÜŞTERİ E-POSTASI]`
-- Web3Forms hesabı: `hello@ankaturdatca.com`
-- Vercel projesi (bizde): `ankatur-site` (subbarca)
+- GoDaddy (müşteri hesabı): `sahinyilmaz.ankatur@gmail.com`
+- E-posta bildirim adresi: `[MÜŞTERİ E-POSTASI — teslimde teyit]`
+- Rezervasyon formu: FormSubmit → `hello@ankaturdatca.com` (key yok)
+- Hosting (bizde): GitHub Pages, repo `SubBaRcA/ankaturdatca` (subbarca)
